@@ -3,10 +3,7 @@
 Write a function that parses through the below object and displays all of their
 favorite food dishes as shown:
 */
-
-
-
-const person3 = {
+let person3 = {
     pizza:["Deep Dish","South Side Thin Crust"],
     tacos:"Anything not from Taco bell",
     burgers:"Portillos Burgers",
@@ -18,15 +15,26 @@ const person3 = {
         mcDonalds:"Sham-rock-shake",
         cupids_candies:"Chocolate Malt"
     }]
-};
+}
 
-const {pizza, tacos, burgers, ice_cream, shakes} = person3
+const displayFood = (person) => {
+    for (let key in person) {
+        if (Array.isArray(person[key])) {
+            console.log(`${key}: ${person[key].join(', ')}`)
+        }
+        else if (typeof person[key] === 'shakes') {
+            console.log(`${key}:`)
+            for (let dict_key of person[key]) {
+                console.log(`${dict_key}: ${person[key][dict_key]}`)
+            }
+        }
+        else {
+            console.log(`${key}: ${person[key]}`)
+        }
+    }
+}
 
-console.log(pizza)
-console.log(tacos)
-console.log(burgers)
-console.log(ice_cream)
-console.log(shakes)
+displayFood(person3)
 
 
 //=======Exercise #2=========//
@@ -40,12 +48,28 @@ age by 3 years. Use an arrow function for both methods
 */
 
 // Create our Person Prototype
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    
+    // Use an arrow to create the printInfo method
+    this.printInfo = () => {
+        console.log(`Name: ${this.name}, Age: ${this.age}`);
+    }
 
+    // Create another arrow function for the addAge method that takes a single parameter
+    // Adding to the age    
+    this.addAge = (amt) => {
+        this.age += amt;
+    }
+}
 
-// Use an arrow to create the printInfo method
-
-// Create another arrow function for the addAge method that takes a single parameter
-// Adding to the age 
+const person1 = new Person('Donte', 26)
+const person2 = new Person('Peter Griffin', 42)
+console.log(person1)
+console.log(person2)
+person1.addAge(3)
+console.log(person1.age)
 
 
 // =============Exercise #3 ============//
@@ -55,14 +79,29 @@ age by 3 years. Use an arrow function for both methods
     If the length is greater than ten console log "Big word". 
     If the length of the string is less than 10 console log "Small Number"
 */
-
-async function stringLength(string){
-    if(string.length > 10) {
-        console.log("Big Word");
-    }
-    else {
-        console.log("Small number");
-    }
+const checkString = str => {
+    return new Promise((resolve, reject) => {
+        if (str.length >= 10) {
+            resolve('Big Word')
+        }
+        else if (str.length < 10) {
+            resolve('Small Number')
+        }
+        else {
+            reject('Unknown')
+        }
+    })
 }
-const inputString = "Coding Temple is Awesome";
-stringLength(inputString)
+
+const str1 = checkString('racecar')
+console.log(str1)
+
+const output = async (input) => {
+    checkString(input)
+    const response = await checkString(input)
+    console.log(response)
+}
+
+output('racecarracecar')
+output('racecar')
+
